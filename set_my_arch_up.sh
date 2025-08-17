@@ -51,6 +51,10 @@ pac git base-devel curl wget unzip zip rustup \
     noto-fonts noto-fonts-emoji ttf-dejavu \
     neovim nano ripgrep fd bat btop htop tree rsync jq tmux
 
+# Configure Rust
+echo "==> Configuring Rust..."
+rustup default stable
+
 # yay - AUR helper
 cd
 git clone https://aur.archlinux.org/yay-bin.git
@@ -68,6 +72,7 @@ git clone https://github.com/alacritty/alacritty.git
 cd alacritty
 pac cmake freetype2 fontconfig pkg-config make libxcb libxkbcommon python
 cargo build --release
+sudo cp target/release/alacritty /usr/local/bin
 mkdir -p ~/.bash_completion
 cp extra/completions/alacritty.bash ~/.bash_completion/alacritty
 echo "source ~/.bash_completion/alacritty" >> ~/.bashrc
