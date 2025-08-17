@@ -2,8 +2,8 @@
 set -euo pipefail
 
 HYPR_REPO="${HYPR_REPO:-https://github.com/Tiramisu-Cake/myHyprland}"
-WAYBAR_REPO="${WAYBAR_REPO:-}"
-ALACRITTY_REPO="${ALACRITTY_REPO:-}"
+WAYBAR_REPO="${WAYBAR_REPO:-https://github.com/Tiramisu-Cake/myWaybar.git}"
+ALACRITTY_REPO="${ALACRITTY_REPO:-https://github.com/Tiramisu-Cake/myAlacritty.git}"
 
 need_cmd() { command -v "$1" >/dev/null 2>&1 || { echo "Need command: $1"; exit 1; }; }
 is_root() { [ "${EUID:-$(id -u)}" -eq 0 ]; }
