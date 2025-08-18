@@ -70,7 +70,6 @@ yay -S tofi
 echo "==> Enabling services..."
 $SUDO systemctl enable --now NetworkManager.service
 $SUDO systemctl enable --now bluetooth.service || true
-$SUDO systemctl enable --now fstrim.timer || true   # полезно для SSD
 
 # Alacritty terminal
 cd
