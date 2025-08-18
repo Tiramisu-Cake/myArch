@@ -46,7 +46,7 @@ pac git base-devel curl wget unzip zip rustup \
     alsa-ucm-conf alsa-utils pavucontrol \
     polkit hyprpolkitagent hyprland waybar \
     wl-clipboard cliphist hyprshot swappy \
-    brightnessctl playerctl \
+    brightnessctl playerctl nwg-displays \
     xdg-desktop-portal xdg-desktop-portal-hyprland \
     noto-fonts noto-fonts-emoji ttf-dejavu \
     neovim nano ripgrep fd bat btop htop tree rsync jq tmux
@@ -66,13 +66,19 @@ rm -rf yay-bin
 # AUR packages
 yay -S tofi
 
+# Services
+echo "==> Enabling services..."
+$SUDO systemctl enable --now NetworkManager.service
+$SUDO systemctl enable --now bluetooth.service || true
+$SUDO systemctl enable --now fstrim.timer || true   # полезно для SSD
+
 # Alacritty terminal
 cd
 git clone https://github.com/alacritty/alacritty.git
 cd alacritty
 pac cmake freetype2 fontconfig pkg-config make libxcb libxkbcommon python
 cargo build --release
-sudo cp target/release/alacritty /usr/local/bin
+sudo cp target/release/alacritty /usr/bin
 mkdir -p ~/.bash_completion
 cp extra/completions/alacritty.bash ~/.bash_completion/alacritty
 echo "source ~/.bash_completion/alacritty" >> ~/.bashrc
