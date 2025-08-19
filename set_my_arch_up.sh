@@ -64,7 +64,7 @@ cd
 rm -rf yay-bin
 
 # AUR packages
-yay -S tofi 
+yay -S tofi hyprland-per-window-layout
 
 # Services
 echo "==> Enabling services..."
