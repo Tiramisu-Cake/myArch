@@ -43,7 +43,7 @@ pac_sync
 pac git base-devel curl wget unzip zip rustup \
     networkmanager network-manager-applet bluez blueman \
     pipewire wireplumber pipewire-pulse pipewire-alsa \
-    alsa-ucm-conf alsa-utils pavucontrol \
+    alsa-ucm-conf alsa-utils pavucontrol ttf-firacode-nerd \
     polkit hyprpolkitagent hyprland waybar \
     wl-clipboard cliphist hyprshot swappy \
     brightnessctl playerctl nwg-displays \
@@ -64,7 +64,7 @@ cd
 rm -rf yay-bin
 
 # AUR packages
-yay -S tofi
+yay -S tofi 
 
 # Services
 echo "==> Enabling services..."
@@ -72,6 +72,7 @@ $SUDO systemctl enable --now NetworkManager.service
 $SUDO systemctl enable --now bluetooth.service || true
 
 # Alacritty terminal
+echo "==> Installing Alacrittyi..."
 cd
 git clone https://github.com/alacritty/alacritty.git
 cd alacritty
@@ -83,6 +84,11 @@ cp extra/completions/alacritty.bash ~/.bash_completion/alacritty
 echo "source ~/.bash_completion/alacritty" >> ~/.bashrc
 cd
 rm -rf alacritty
+
+# Catppuccin for tmux
+echo "==> Making tmux nice..."
+mkdir -p ~/.config/tmux/plugins/catppuccin
+git clone -b v2.1.3 https://github.com/catppuccin/tmux.git ~/.config/tmux/plugins/catppuccin/tmux
 
 ## Starship (shell prompt)
 curl -sS https://starship.rs/install.sh | sh
