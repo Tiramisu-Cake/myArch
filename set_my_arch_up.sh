@@ -4,6 +4,7 @@ set -euo pipefail
 HYPR_REPO="${HYPR_REPO:-https://github.com/Tiramisu-Cake/myHyprland}"
 WAYBAR_REPO="${WAYBAR_REPO:-https://github.com/Tiramisu-Cake/myWaybar.git}"
 ALACRITTY_REPO="${ALACRITTY_REPO:-https://github.com/Tiramisu-Cake/myAlacritty.git}"
+WALLPAPERS_REPO="${WALLPAPERS_REPO:-https://github.com/Tiramisu-Cake/wallpapers.git}"
 
 need_cmd() { command -v "$1" >/dev/null 2>&1 || { echo "Need command: $1"; exit 1; }; }
 is_root() { [ "${EUID:-$(id -u)}" -eq 0 ]; }
@@ -40,17 +41,25 @@ pac_sync() { $SUDO pacman --noconfirm -Syu; }
 # Necessary packages
 echo "==> System update and packages installation" 
 pac_sync
+
+# Hyprland musthaves and others
+pac hyprland hyprpolkitagent waybar hyprshot swappy hyprpicker \
+    xdg-desktop-portal-hyprland
+
 pac git base-devel curl wget unzip zip rustup \
     networkmanager network-manager-applet bluez blueman \
     pipewire wireplumber pipewire-pulse pipewire-alsa \
-    alsa-ucm-conf alsa-utils pavucontrol ttf-firacode-nerd \
-    polkit hyprpolkitagent hyprland waybar \
-    wl-clipboard cliphist hyprshot swappy \
+    alsa-ucm-conf alsa-utils pavucontrol \
+    polkit wl-clipboard cliphist \
     brightnessctl playerctl nwg-displays \
-    xdg-desktop-portal xdg-desktop-portal-hyprland \
-    noto-fonts noto-fonts-emoji ttf-dejavu \
+    xdg-desktop-portal \
     neovim nano ripgrep fd bat btop htop tree rsync jq tmux
 
+# Fonts
+pac inter-font ttf-noto-nerd noto-fonts noto-fonts-emoji ttf-dejavu ttf-firacode-nerd
+
+#yazi
+pac yazi ffmpeg 7zip jq poppler fd ripgrep fzf zoxide resvg imagemagick ueberzugpp chafa
 # Configure Rust
 echo "==> Configuring Rust..."
 rustup default stable
@@ -64,7 +73,10 @@ cd
 rm -rf yay-bin
 
 # AUR packages
-yay -S tofi hyprland-per-window-layout
+yay -S --needed tofi hyprland-per-window-layout
+
+# AUR fonts
+yay  -S --needed otf-apple-fonts ttf-segoe-ui-variable
 
 # Services
 echo "==> Enabling services..."
@@ -72,7 +84,7 @@ $SUDO systemctl enable --now NetworkManager.service
 $SUDO systemctl enable --now bluetooth.service || true
 
 # Alacritty terminal
-echo "==> Installing Alacrittyi..."
+echo "==> Installing Alacritty..."
 cd
 git clone https://github.com/alacritty/alacritty.git
 cd alacritty
@@ -101,3 +113,5 @@ mkdir -p "$HOME/.config"
 sync_repo "$HYPR_REPO"      "" "$HOME/.config/hypr"
 sync_repo "$WAYBAR_REPO"    "" "$HOME/.config/waybar"
 sync_repo "$ALACRITTY_REPO" "" "$HOME/.config/alacritty"
+sync_repo "$WALLPAPERS_REPO" "" "$HOME/Pictures/wallpapers"
+
