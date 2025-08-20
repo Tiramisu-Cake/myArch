@@ -2,7 +2,7 @@
 set -euo pipefail
 
 sudo pacman -Syu
-sudo pacman -S nvidia-dkms nvidia-utils nvidia-settings nvidia-headers
+sudo pacman -S nvidia-dkms nvidia-utils nvidia-settings linux-headers
 
 echo -e "blacklist nouveau\noptions nouveau modeset=0" | sudo tee /etc/modprobe.d/blacklist-nouveau.conf
 sudo mkinitcpio -P

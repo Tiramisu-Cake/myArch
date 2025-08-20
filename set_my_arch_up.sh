@@ -5,6 +5,8 @@ HYPR_REPO="${HYPR_REPO:-https://github.com/Tiramisu-Cake/myHyprland}"
 WAYBAR_REPO="${WAYBAR_REPO:-https://github.com/Tiramisu-Cake/myWaybar.git}"
 ALACRITTY_REPO="${ALACRITTY_REPO:-https://github.com/Tiramisu-Cake/myAlacritty.git}"
 WALLPAPERS_REPO="${WALLPAPERS_REPO:-https://github.com/Tiramisu-Cake/wallpapers.git}"
+NEOVIM_REPO="${NEOVIM_REPO:-https://github.com/Tiramisu-Cake/my_nvim_cfg.git}"
+
 
 need_cmd() { command -v "$1" >/dev/null 2>&1 || { echo "Need command: $1"; exit 1; }; }
 is_root() { [ "${EUID:-$(id -u)}" -eq 0 ]; }
@@ -44,7 +46,7 @@ pac_sync
 
 # Hyprland musthaves and others
 pac hyprland hyprpolkitagent waybar hyprshot swappy hyprpicker \
-    xdg-desktop-portal-hyprland
+    xdg-desktop-portal-hyprland hyprpaper
 
 pac git base-devel curl wget unzip zip rustup \
     networkmanager network-manager-applet bluez blueman \
@@ -114,4 +116,11 @@ sync_repo "$HYPR_REPO"      "" "$HOME/.config/hypr"
 sync_repo "$WAYBAR_REPO"    "" "$HOME/.config/waybar"
 sync_repo "$ALACRITTY_REPO" "" "$HOME/.config/alacritty"
 sync_repo "$WALLPAPERS_REPO" "" "$HOME/Pictures/wallpapers"
+sync_repo "$NEOVIM_REPO" "" "$HOME/.config/nvim"
+
+cd
+cd $HOME/myArch
+git remote set-url origin git@github.com:Tiramisu-Cake/myArch.git
+
+cd
 

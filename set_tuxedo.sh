@@ -1,8 +1,8 @@
-#!usr/bin/env bash
+#!/usr/bin/env bash
 set -euo pipefail
 
-sudo yay -Syu
-sudo yay -S tuxedo-drivers-dkms tuxedo-control-center-bin linux-headers
+yay -Syu
+yay -S tuxedo-drivers-dkms tuxedo-control-center-bin linux-headers
 
 sudo systemctl enable --now tccd.service
 
