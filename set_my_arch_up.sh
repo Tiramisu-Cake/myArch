@@ -46,7 +46,7 @@ pac_sync
 
 # Hyprland musthaves and others
 pac hyprland hyprpolkitagent waybar hyprshot swappy hyprpicker \
-    xdg-desktop-portal-hyprland hyprpaper
+    xdg-desktop-portal-hyprland hyprpaper hyprlock
 
 pac git base-devel curl wget unzip zip rustup \
     networkmanager network-manager-applet bluez blueman \
@@ -98,6 +98,9 @@ cp extra/completions/alacritty.bash ~/.bash_completion/alacritty
 echo "source ~/.bash_completion/alacritty" >> ~/.bashrc
 cd
 rm -rf alacritty
+
+# tmux plugin manager
+git clone https://github.com/tmux-plugins/tpm ~/.config/.tmux/plugins/tpm
 
 # Catppuccin for tmux
 echo "==> Making tmux nice..."
