@@ -100,12 +100,8 @@ cd
 rm -rf alacritty
 
 # tmux plugin manager
-git clone https://github.com/tmux-plugins/tpm ~/.config/.tmux/plugins/tpm
-
-# Catppuccin for tmux
-echo "==> Making tmux nice..."
-mkdir -p ~/.config/tmux/plugins/catppuccin
-git clone -b v2.1.3 https://github.com/catppuccin/tmux.git ~/.config/tmux/plugins/catppuccin/tmux
+mkdir -p ~/.tmux/plugins
+git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 
 ## Starship (shell prompt)
 curl -sS https://starship.rs/install.sh | sh
@@ -121,9 +117,22 @@ sync_repo "$ALACRITTY_REPO" "" "$HOME/.config/alacritty"
 sync_repo "$WALLPAPERS_REPO" "" "$HOME/Pictures/wallpapers"
 sync_repo "$NEOVIM_REPO" "" "$HOME/.config/nvim"
 
-cd
+ln -siv "$HOME/.config/alacritty/.tmux.conf" "$HOME/.tmux.conf"
+
+cd $HOME/.config/hypr
+git remote set-url origin git@github.com:Tiramisu-Cake/myHyprland.git
+
+cd $HOME/.config/waybar
+git remote set-url origin git@github.com:Tiramisu-Cake/myWaybar.git
+
+cd $HOME/.config/alacritty
+git remote set-url origin git@github.com:Tiramisu-Cake/myAlacritty.git
+
+cd $HOME/Pictures/wallpapers
+git remote set-url origin git@github.com:Tiramisu-Cake/wallpapers.git
+
+cd $HOME/.config/nvim
+git remote set-url origin git@github.com:Tiramisu-Cake/my_nvim_cfg.git
+
 cd $HOME/myArch
 git remote set-url origin git@github.com:Tiramisu-Cake/myArch.git
-
-cd
-
