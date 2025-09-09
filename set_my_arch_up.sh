@@ -2,7 +2,7 @@
 set -euo pipefail
 
 declare -A REPOS
-REPOS["https://github.com/Tiramisu-Cake/myHyprland.git"]="$HOME/.config/hyprland"
+REPOS["https://github.com/Tiramisu-Cake/myHyprland.git"]="$HOME/.config/hypr"
 REPOS["https://github.com/Tiramisu-Cake/myWaybar.git"]="$HOME/.config/waybar"
 REPOS["https://github.com/Tiramisu-Cake/myAlacritty.git"]="$HOME/.config/alacritty"
 REPOS["https://github.com/Tiramisu-Cake/wallpapers.git"]="$HOME/Pictures/wallpapers"
