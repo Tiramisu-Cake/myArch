@@ -47,29 +47,6 @@ pac_sync() { $SUDO pacman --noconfirm -Syu; }
 echo "==> System update and packages installation"
 pac_sync
 
-# Hyprland musthaves and others
-pac hyprland hyprpolkitagent waybar hyprshot swappy hyprpicker \
-  xdg-desktop-portal-hyprland hyprpaper hyprlock
-
-pac alacritty git base-devel curl wget unzip zip rustup \
-  networkmanager network-manager-applet bluez blueman \
-  pipewire wireplumber pipewire-pulse pipewire-alsa \
-  alsa-ucm-conf alsa-utils pavucontrol \
-  polkit wl-clipboard cliphist \
-  brightnessctl playerctl nwg-displays \
-  xdg-desktop-portal \
-  neovim nano ripgrep fd bat btop htop tree rsync jq tmux
-
-# Fonts
-pac inter-font ttf-noto-nerd noto-fonts noto-fonts-emoji ttf-dejavu ttf-firacode-nerd
-
-#yazi
-pac yazi ffmpeg 7zip jq poppler fd ripgrep fzf zoxide resvg imagemagick ueberzugpp chafa
-
-# Configure Rust
-echo "==> Configuring Rust..."
-rustup default stable
-
 # yay - AUR helper
 cd
 git clone https://aur.archlinux.org/yay-bin.git
@@ -78,14 +55,56 @@ makepkg -si
 cd
 rm -rf yay-bin
 
+# General
+pac base-devel rustup npm networkmanager network-manager-applet \
+  bluez blueman polkit wl-clipboard cliphist \
+  brightnessctl playerctl nwg-displays \
+  xdg-desktop-portal
+
+# Sound
+pac pipewire wireplumber pipewire-pulse pipewire-alsa pipewire-jack \
+  alsa-ucm-conf alsa-utils pavucontrol sof-firmware
+
+# Hyprland musthaves and others
+pac hyprland hyprpolkitagent waybar hyprshot swappy hyprpicker \
+  xdg-desktop-portal-hyprland hyprpaper hyprlock
+
+# Terminal and CLIs
+pac alacritty git github-cli curl wget neovim nano vivid \
+  ripgrep fd bat btop htop tree rsync tmux mpv lazygit
+
+# Filemanager
+pac thunar thunar-archive-plugin xarchiver \
+  gvfs tumbler ffmpegthumbnailer 7zip unrar \
+  gvfs-mtp udisks2 thunar-volman
+
+# Notifications
+pac mako libnotify
+# Fonts
+pac inter-font ttf-noto-nerd noto-fonts noto-fonts-emoji ttf-dejavu ttf-firacode-nerd
+
+#yazi
+pac yazi ffmpeg jq poppler fd ripgrep fzf zoxide resvg imagemagick ueberzugpp chafa
+
+# Configure Rust
+echo "==> Configuring Rust..."
+rustup default stable
+
 # Docker
-pac docker docker-compose docker-buildx
+pac docker docker-compose docker-buildx yq
 $SUDO systemctl disable --now docker.service
 $SUDO systemctl enable --now docker.socket
 yay -S lazydocker
 
 # AUR packages
 yay -S --needed tofi hyprland-per-window-layout
+
+# Configuring tofi
+mkdir -p "$HOME/.config/tofi"
+$SUDO cp /etc/xdg/tofi/config "$HOME/.config/tofi/config"
+sed -i 's/^[[:space:]]*border-color[[:space:]]*=.*/border-color = #d79921/' \
+  "$HOME/.config/tofi/config"
+
 # AUR fonts
 yay -S --needed otf-apple-fonts ttf-segoe-ui-variable
 
@@ -98,13 +117,22 @@ $SUDO systemctl enable --now bluetooth.service || true
 mkdir -p ~/.tmux/plugins
 git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 
-## Starship (shell prompt)
+# Starship (shell prompt)
 curl -sS https://starship.rs/install.sh | sh
-echo 'eval "$(starship init bash)"' >>~/.bashrc
+echo 'eval "$(starship init bash)"' >>"$HOME/.bashrc"
+
+# Configuring ~/.bashrc
+echo 'set -o vi' >>"$HOME/.bashrc"
+echo 'export VISUAL=nvim' >>"$HOME/.bashrc"
+echo 'export EDITOR=nvim' >>"$HOME/.bashrc"
+echo 'export LS_COLORS="$(vivid generate gruvbox-dark)"' >>"$HOME/.bashrc"
 
 # Configs from repos
 echo "==> pull configs"
 mkdir -p "$HOME/.config"
 
 sync_repos
+
+mkdir -p "$HOME/.config/mako"
+ln -siv "$HOME/.config/hypr/mako_config" "$HOME/.config/mako/config"
 ln -siv "$HOME/.config/alacritty/.tmux.conf" "$HOME/.tmux.conf"
