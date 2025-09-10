@@ -59,7 +59,7 @@ rm -rf yay-bin
 pac base-devel rustup npm networkmanager network-manager-applet \
   bluez blueman polkit wl-clipboard cliphist \
   brightnessctl playerctl nwg-displays \
-  xdg-desktop-portal
+  xdg-desktop-portal gcr
 
 # Sound
 pac pipewire wireplumber pipewire-pulse pipewire-alsa pipewire-jack \
@@ -112,6 +112,7 @@ yay -S --needed otf-apple-fonts ttf-segoe-ui-variable
 echo "==> Enabling services..."
 $SUDO systemctl enable --now NetworkManager.service
 $SUDO systemctl enable --now bluetooth.service || true
+systemctl --user enable --now gcr-ssh-agent.socket
 
 # tmux plugin manager
 mkdir -p ~/.tmux/plugins
